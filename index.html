@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Gender Reveal – Chorro Clarín 🌿</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --pink:#d4789a;--blue:#6a9fd4;
+  --pink-l:#fbe8f0;--blue-l:#e8f0fb;
+  --pink-m:#e8a8c0;--blue-m:#98c4e8;
+  --wood:#4a3728;--muted:#8a7a6a;
+  --glass:rgba(255,255,255,0.72);
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Nunito',sans-serif;background:#f8f3ee;touch-action:pan-y}
+
+/* ── Keyframes ── */
+@keyframes float    {0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes sway     {0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes pulse    {0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.05);opacity:1}}
+@keyframes drift    {0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+@keyframes sparkle  {0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes spin     {to{transform:rotate(360deg)}}
+@keyframes fade-up  {from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fall     {0%{transform:translateY(-30px) rotate(0deg);opacity:0}8%{opacity:1}100%{transform:translateY(105vh) rotate(400deg);opacity:0}}
+@keyframes orb-a    {0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(28px,-18px) scale(1.08)}70%{transform:translate(-18px,14px) scale(.94)}}
+@keyframes orb-b    {0%,100%{transform:translate(0,0) scale(1)}35%{transform:translate(-22px,16px) scale(1.05)}65%{transform:translate(18px,-10px) scale(.96)}}
+@keyframes orb-c    {0%,100%{transform:translate(0,0)}50%{transform:translate(10px,10px) scale(1.06)}}
+@keyframes intro-out{to{opacity:0;transform:scale(1.04)}}
+@keyframes shimmer  {0%{background-position:200% center}100%{background-position:-200% center}}
+@keyframes hint     {0%,100%{opacity:0;transform:translateX(0)}30%{opacity:.7}70%{opacity:.7;transform:translateX(10px)}}
+
+/* ════════════════════════════
+   INTRO
+════════════════════════════ */
+#intro{
+  position:fixed;inset:0;z-index:900;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:2rem 1.8rem;overflow:hidden;
+  background:linear-gradient(135deg,#fbe8f0 0%,#f5d5e8 28%,#e8f0fb 52%,#d5e5f8 100%);
+}
+#intro.out{animation:intro-out .85s ease forwards;pointer-events:none}
+
+/* Atmospheric orbs */
+.orb{position:absolute;border-radius:50%;filter:blur(58px);pointer-events:none}
+.orb-p{width:290px;height:290px;background:rgba(212,120,154,.3);top:-65px;left:-65px;animation:orb-a 9s ease-in-out infinite}
+.orb-b{width:270px;height:270px;background:rgba(106,159,212,.28);bottom:-55px;right:-55px;animation:orb-b 11s ease-in-out infinite}
+.orb-g{width:185px;height:185px;background:rgba(100,190,150,.17);top:42%;left:28%;animation:orb-c 14s ease-in-out infinite}
+
+/* Diagonal split line */
+.split-line{
+  position:absolute;top:0;left:50%;width:1.5px;height:100%;
+  background:linear-gradient(to bottom,transparent,rgba(255,255,255,.55) 30%,rgba(255,255,255,.55) 70%,transparent);
+  transform:rotate(8deg) translateX(-50%);pointer-events:none;
+}
+
+/* Falling petals */
+.ipetal{position:absolute;border-radius:50% 0 50% 0;animation:fall linear infinite;pointer-events:none}
+
+.intro-badge{
+  font-size:9.5px;font-weight:700;letter-spacing:3.5px;
+  text-transform:uppercase;color:#9a8a7a;
+  margin-bottom:1.1rem;animation:fade-up .9s ease .2s both;
+}
+
+/* Dual icons */
+.icon-row{display:flex;align-items:center;gap:1.15rem;margin-bottom:1.5rem;animation:fade-up .9s ease .08s both}
+.icon-half{display:flex;flex-direction:column;align-items:center;gap:.35rem}
+.icon-circle{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.85rem;animation:float 4s ease-in-out infinite}
+.ic-p{background:rgba(212,120,154,.18);border:2px solid rgba(212,120,154,.38)}
+.ic-b{background:rgba(106,159,212,.18);border:2px solid rgba(106,159,212,.38);animation-delay:.9s}
+.ic-lbl{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase}
+.lp{color:#b84070}.lb{color:#3070b0}
+.vs{font-family:'Playfair Display',serif;font-size:2rem;color:#5a4a3a;font-style:italic;font-weight:700}
+
+/* Split heart SVG wrapper */
+.heart-wrap{display:block;margin:0 auto 1.3rem;animation:fade-up .9s ease .3s both}
+
+.intro-h{
+  font-family:'Playfair Display',serif;font-size:1.52rem;line-height:1.4;
+  text-align:center;color:#3a2a1a;margin-bottom:.65rem;
+  animation:fade-up .9s ease .42s both;
+}
+.intro-h em{font-style:italic;color:#b03870}
+.intro-sub{
+  font-size:.9rem;color:#7a6a5a;text-align:center;line-height:1.75;
+  max-width:262px;margin-bottom:1.9rem;animation:fade-up .9s ease .56s both;
+}
+
+/* CTA button */
+.btn-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'Nunito',sans-serif;font-size:.98rem;font-weight:700;
+  color:white;border:none;cursor:pointer;text-decoration:none;
+  padding:.98rem 2.3rem;border-radius:50px;
+  background:linear-gradient(90deg,#d4789a,#9ab4d8,#6a9fd4,#d4789a);
+  background-size:300% auto;
+  animation:fade-up .9s ease .7s both,shimmer 4s linear 2s infinite;
+  box-shadow:0 6px 30px rgba(180,120,160,.4);
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-cta:hover{transform:translateY(-3px);box-shadow:0 10px 40px rgba(180,120,160,.55)}
+.btn-cta:active{transform:scale(.97)}
+
+.intro-footer{
+  position:absolute;bottom:1.6rem;
+  font-size:.67rem;letter-spacing:2px;text-transform:uppercase;color:#b0a09a;
+  animation:fade-up .9s ease .88s both;
+}
+
+/* ════════════════════════════
+   PROGRESS BAR
+════════════════════════════ */
+#prog{position:fixed;top:0;left:0;right:0;height:3px;z-index:400;background:rgba(255,255,255,.3)}
+#prog-fill{height:100%;width:25%;background:linear-gradient(90deg,var(--pink),var(--blue));transition:width .7s cubic-bezier(.4,0,.2,1)}
+
+/* ════════════════════════════
+   TOP UI
+════════════════════════════ */
+#ctr{position:fixed;top:1.3rem;left:1.35rem;z-index:400;font-size:.71rem;font-weight:700;letter-spacing:1.5px;color:rgba(90,70,55,.6);display:none}
+.mbtn{
+  position:fixed;top:1.1rem;right:1.1rem;z-index:400;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--glass);backdrop-filter:blur(12px);
+  border:1.5px solid rgba(180,140,160,.3);
+  display:none;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1rem;transition:transform .2s;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+.mbtn:hover{transform:scale(1.1)}
+.mbtn.playing{animation:pulse 1.5s ease-in-out infinite}
+
+/* ════════════════════════════
+   CAROUSEL
+════════════════════════════ */
+.carousel{position:relative;width:100%;max-width:430px;margin:0 auto;height:100vh;min-height:680px;overflow:hidden}
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:3rem 1.6rem 7rem;
+  opacity:0;transform:translateX(40px);
+  transition:opacity .75s ease,transform .75s ease;
+  pointer-events:none;
+}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:all}
+
+/* Subtle grain overlay */
+.slide::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+}
+.slide>*{position:relative;z-index:1}
+
+.s1{background:linear-gradient(145deg,#f0f8f5 0%,#fbe8ef 45%,#e8eef8 100%)}
+.s2{background:linear-gradient(145deg,#f5f0e8 0%,#e5f5f0 55%,#fbe8f0 100%)}
+.s3{background:linear-gradient(145deg,#eaeaf8 0%,#fbe8f0 45%,#e5f5f0 100%)}
+.s4{background:linear-gradient(145deg,#fbe8ef 0%,#f5f0e6 50%,#e8f0fb 100%)}
+
+/* ── Typography ── */
+.sbadge{font-size:10px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:#b0a090;margin-bottom:.85rem}
+.stitle{font-family:'Playfair Display',serif;font-size:2.5rem;line-height:1.15;text-align:center;color:#3a2a1a}
+.stitle em{font-style:italic}
+.ep{color:#c0507a}.eb{color:#3a7ab8}
+.ssub{font-size:.93rem;color:#7a6a5a;text-align:center;line-height:1.7;max-width:275px;margin:.65rem 0}
+
+/* Glass cards */
+.gc{
+  background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-radius:22px;border:1.5px solid rgba(255,255,255,.9);
+  padding:1.1rem 1.35rem;width:100%;max-width:315px;
+  margin:.42rem auto;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.05);
+}
+.glbl{font-size:9.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#b0a090;margin-bottom:.22rem;display:block}
+.gval{font-family:'Playfair Display',serif;font-size:1.22rem;color:#3a2a1a;font-weight:700}
+.gsub{font-size:.8rem;color:#8a7a6a;margin-top:.18rem}
+
+/* Location btn */
+.btn-loc{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,#c0507a,#6080c8);
+  color:white;font-family:'Nunito',sans-serif;font-size:.87rem;font-weight:700;
+  padding:.78rem 1.55rem;border-radius:50px;border:none;cursor:pointer;text-decoration:none;
+  margin-top:.85rem;box-shadow:0 5px 22px rgba(160,100,140,.38);transition:transform .2s,box-shadow .2s;
+}
+.btn-loc:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(160,100,140,.5)}
+
+/* Time */
+.time-wrap{text-align:center;margin:.85rem 0}
+.time-big{
+  font-family:'Playfair Display',serif;font-size:3.8rem;color:#3a2a1a;line-height:1;font-weight:700;
+  background:linear-gradient(90deg,#c0507a,#3a7ab8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.time-am{font-family:'Playfair Display',serif;font-size:1.4rem;color:#3a7ab8;font-weight:400;font-style:italic}
+.date-pill{
+  display:inline-block;
+  background:linear-gradient(135deg,rgba(192,80,122,.11),rgba(58,122,184,.11));
+  border:1.5px solid rgba(150,120,160,.24);border-radius:50px;
+  padding:.48rem 1.5rem;font-family:'Playfair Display',serif;font-size:1.03rem;
+  color:#7050a0;font-style:italic;margin-bottom:.85rem;
+}
+
+/* Team cards */
+.team-row{display:flex;gap:10px;width:100%;max-width:315px;margin:.5rem auto}
+.tc{flex:1;border-radius:18px;padding:.82rem .75rem;text-align:center;border:1.5px solid rgba(255,255,255,.85);backdrop-filter:blur(10px)}
+.tc-p{background:rgba(245,208,224,.6)}.tc-b{background:rgba(208,229,245,.6)}
+.tc-ico{font-size:1.55rem;display:block;margin-bottom:.28rem}
+.tc-lbl{font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.tc-lp{color:#a03060}.tc-lb{color:#2060a0}
+.tc-name{font-family:'Playfair Display',serif;font-size:1.08rem;font-style:italic;margin-top:.12rem}
+.tc-np{color:#c0507a}.tc-nb{color:#3a7ab8}
+
+/* Picnic count */
+.pnum{
+  font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;line-height:1;
+  background:linear-gradient(135deg,#c0507a,#3a7ab8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.pmsg{font-size:.9rem;color:#7a6a5a;line-height:1.65;font-style:italic;padding-top:.72rem;margin-top:.72rem;border-top:1px solid rgba(160,140,130,.22)}
+
+/* SVG utils */
+.svg-sc{width:100%;max-width:312px;margin:.75rem auto}
+.c1{animation:float 4s ease-in-out infinite}
+.c2{animation:float 5s ease-in-out infinite 1.2s}
+.c3{animation:float 3.6s ease-in-out infinite .5s}
+.stk{animation:float 6s ease-in-out infinite .3s}
+.wng{animation:sway 2s ease-in-out infinite;transform-origin:center}
+.bnd{animation:sway 4s ease-in-out infinite;transform-origin:top center}
+.btl{animation:float 3.5s ease-in-out infinite}
+.sun{animation:pulse 3s ease-in-out infinite}
+.l1{animation:sway 4s ease-in-out infinite;transform-origin:bottom center}
+.l2{animation:sway 3s ease-in-out infinite 1s;transform-origin:bottom center}
+.k1{animation:sparkle 2s ease-in-out infinite}
+.k2{animation:sparkle 2.5s ease-in-out infinite .6s}
+.k3{animation:sparkle 3s ease-in-out infinite 1.2s}
+.bsk{animation:float 4s ease-in-out infinite .5s}
+.blnk{animation:drift 5s ease-in-out infinite}
+
+/* ════════════════════════════
+   DOTS
+════════════════════════════ */
+.dots{
+  position:fixed;bottom:118px;left:50%;transform:translateX(-50%);
+  display:flex;gap:8px;z-index:300;opacity:0;transition:opacity .5s;
+}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(140,100,120,.28);transition:all .4s;cursor:pointer}
+.dot.active{background:linear-gradient(90deg,var(--pink),var(--blue));width:22px;border-radius:3px}
+
+/* ════════════════════════════
+   WHATSAPP FAB
+════════════════════════════ */
+.wa{
+  position:fixed;bottom:1.8rem;left:50%;transform:translateX(-50%);z-index:300;
+  display:flex;align-items:center;gap:10px;
+  background:#25D366;color:white;
+  font-family:'Nunito',sans-serif;font-size:.91rem;font-weight:700;
+  padding:.93rem 1.85rem;border-radius:50px;border:none;cursor:pointer;
+  text-decoration:none;white-space:nowrap;
+  box-shadow:0 6px 28px rgba(37,211,102,.42);
+  transition:transform .2s,box-shadow .2s;
+  animation:pulse 3s ease-in-out 3s infinite;
+}
+.wa:hover{transform:translateX(-50%) translateY(-3px);box-shadow:0 10px 38px rgba(37,211,102,.55)}
+
+/* confetti */
+.cf{position:fixed;animation:fall linear infinite;pointer-events:none;z-index:2}
+
+/* swipe hint */
+#hint{
+  position:fixed;bottom:158px;right:1.3rem;z-index:300;
+  font-size:.68rem;color:#a09080;letter-spacing:1px;
+  display:flex;align-items:center;gap:4px;
+  animation:hint 3.5s ease 2.5s forwards;pointer-events:none;
+}
+</style>
+</head>
+<body>
+
+<!-- ══ INTRO ══ -->
+<div id="intro">
+  <div class="orb orb-p"></div>
+  <div class="orb orb-b"></div>
+  <div class="orb orb-g"></div>
+  <div class="split-line"></div>
+  <div id="ipetals"></div>
+
+  <div class="intro-badge">gender reveal · 26 abril 2026</div>
+
+  <!-- Dual icons -->
+  <div class="icon-row">
+    <div class="icon-half">
+      <div class="icon-circle ic-p">👧</div>
+      <span class="ic-lbl lp">¿niña?</span>
+    </div>
+    <div class="vs">o</div>
+    <div class="icon-half">
+      <div class="icon-circle ic-b">👦</div>
+      <span class="ic-lbl lb">¿niño?</span>
+    </div>
+  </div>
+
+  <!-- Split heart: left = pink, right = blue -->
+  <svg class="heart-wrap" viewBox="0 0 160 128" width="158" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <clipPath id="lc"><rect x="0" y="0" width="80" height="128"/></clipPath>
+      <clipPath id="rc"><rect x="80" y="0" width="80" height="128"/></clipPath>
+    </defs>
+    <!-- Spinning ring -->
+    <circle cx="80" cy="64" r="60" fill="none" stroke="rgba(200,180,200,.28)" stroke-width="1.2" stroke-dasharray="5 4" style="animation:spin 22s linear infinite;transform-origin:80px 64px"/>
+    <circle cx="80" cy="64" r="50" fill="rgba(255,255,255,.22)"/>
+    <!-- Pink half -->
+    <g clip-path="url(#lc)">
+      <path d="M80 100 C80 100 38 75 38 52 C38 40 48 32 58 36 C64 38 72 44 80 52" fill="#d4789a" opacity=".87"/>
+    </g>
+    <!-- Blue half -->
+    <g clip-path="url(#rc)">
+      <path d="M80 100 C80 100 122 75 122 52 C122 40 112 32 102 36 C96 38 88 44 80 52" fill="#6a9fd4" opacity=".87"/>
+    </g>
+    <!-- Seam glow -->
+    <line x1="80" y1="33" x2="80" y2="100" stroke="white" stroke-width="2.5" opacity=".5"/>
+    <!-- Sparkle crown -->
+    <line x1="80" y1="18" x2="80" y2="10" stroke="#c0507a" stroke-width="1.5" opacity=".4"/>
+    <text x="80" y="76" font-family="Playfair Display,serif" font-size="27" fill="white" text-anchor="middle" font-style="italic" opacity=".95">?</text>
+    <!-- Sparkles -->
+    <circle cx="36" cy="41" r="3.5" fill="#d4789a" opacity=".55" style="animation:sparkle 2s ease-in-out infinite"/>
+    <circle cx="124" cy="39" r="3"   fill="#6a9fd4" opacity=".6"  style="animation:sparkle 2.6s ease-in-out infinite .5s"/>
+    <circle cx="128" cy="89" r="2.5" fill="#7bbf8a" opacity=".5"  style="animation:sparkle 3.1s ease-in-out infinite 1s"/>
+    <circle cx="32"  cy="88" r="2"   fill="#f5c842" opacity=".45" style="animation:sparkle 2.2s ease-in-out infinite .8s"/>
+    <circle cx="55"  cy="20" r="2"   fill="#d4789a" opacity=".4"  style="animation:sparkle 2.8s ease-in-out infinite .3s"/>
+    <circle cx="105" cy="18" r="2"   fill="#6a9fd4" opacity=".42" style="animation:sparkle 2.4s ease-in-out infinite .9s"/>
+  </svg>
+
+  <h1 class="intro-h">Queremos compartir<br>este <em>gran momento</em><br>contigo</h1>
+  <p class="intro-sub">Una sorpresa llena de amor nos espera. ¡Únete y descúbrela con nosotros!</p>
+
+  <button class="btn-cta" onclick="openInvitation()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </svg>
+    Ver Invitación
+  </button>
+
+  <div class="intro-footer">Domingo 26 de abril · Parque ARVI · 10:30 am</div>
+</div>
+
+<!-- ══ PROGRESS BAR ══ -->
+<div id="prog"><div id="prog-fill"></div></div>
+
+<!-- ══ TOP UI ══ -->
+<span id="ctr">1 / 4</span>
+<button class="mbtn" id="mbtn" onclick="toggleMusic()">🎵</button>
+
+<!-- ══ CAROUSEL ══ -->
+<div class="carousel">
+
+  <!-- SLIDE 1 -->
+  <div class="slide s1 active" id="slide-0">
+    <svg class="svg-sc" viewBox="0 0 320 175" xmlns="http://www.w3.org/2000/svg">
+      <!-- Pink cloud left -->
+      <g class="c1">
+        <ellipse cx="62" cy="52" rx="38" ry="18" fill="#f5d0e0" opacity=".88"/>
+        <ellipse cx="47" cy="57" rx="22" ry="14" fill="#f5d0e0" opacity=".84"/>
+        <ellipse cx="84" cy="57" rx="20" ry="13" fill="#f5d0e0" opacity=".84"/>
+      </g>
+      <!-- Blue cloud right -->
+      <g class="c2">
+        <ellipse cx="248" cy="40" rx="44" ry="19" fill="#d0e5f5" opacity=".88"/>
+        <ellipse cx="228" cy="47" rx="25" ry="14" fill="#d0e5f5" opacity=".84"/>
+        <ellipse cx="272" cy="47" rx="23" ry="13" fill="#d0e5f5" opacity=".84"/>
+      </g>
+      <!-- Lavender cloud top -->
+      <g class="c3">
+        <ellipse cx="160" cy="22" rx="28" ry="12" fill="#ede8f5" opacity=".72"/>
+        <ellipse cx="144" cy="27" rx="17" ry="10" fill="#ede8f5" opacity=".72"/>
+        <ellipse cx="176" cy="27" rx="16" ry="10" fill="#ede8f5" opacity=".72"/>
+      </g>
+      <!-- Stork -->
+      <g class="stk">
+        <ellipse cx="160" cy="112" rx="20" ry="27" fill="white" stroke="#d4c4b4" stroke-width="1"/>
+        <path d="M152 90 Q148 73 156 63" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <path d="M152 90 Q148 73 156 63" fill="none" stroke="#d4c4b4" stroke-width="1" stroke-linecap="round"/>
+        <circle cx="158" cy="60" r="10" fill="white" stroke="#d4c4b4" stroke-width="1"/>
+        <circle cx="161" cy="58" r="2" fill="#4a3728"/><circle cx="162" cy="57" r=".8" fill="white"/>
+        <path d="M166 61 L181 60 L166 63 Z" fill="#e8a040"/>
+        <g class="wng"><path d="M143 103 Q120 88 130 73 Q145 93 160 98 Z" fill="#e8e0d5" stroke="#d4c4b4" stroke-width=".8"/></g>
+        <line x1="153" y1="137" x2="148" y2="162" stroke="#e8a040" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="167" y1="137" x2="172" y2="162" stroke="#e8a040" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="148" y1="162" x2="140" y2="165" stroke="#e8a040" stroke-width="2" stroke-linecap="round"/>
+        <line x1="148" y1="162" x2="152" y2="166" stroke="#e8a040" stroke-width="2" stroke-linecap="round"/>
+        <line x1="172" y1="162" x2="164" y2="165" stroke="#e8a040" stroke-width="2" stroke-linecap="round"/>
+        <line x1="172" y1="162" x2="176" y2="166" stroke="#e8a040" stroke-width="2" stroke-linecap="round"/>
+        <!-- Bundle: pink left, blue right -->
+        <g class="bnd">
+          <path d="M166 61 Q176 61 186 68 Q196 88 186 98 Q176 103 169 93 Q166 78 166 61" fill="white" stroke="#d4c4b4" stroke-width="1" opacity=".9"/>
+          <path d="M168 70 Q173 68 178 70" fill="none" stroke="#d4789a" stroke-width="1.8" opacity=".72"/>
+          <path d="M178 70 Q183 68 187 72" fill="none" stroke="#6a9fd4" stroke-width="1.8" opacity=".72"/>
+          <text x="178" y="91" font-family="Playfair Display,serif" font-size="15" fill="#9060a0" text-anchor="middle" font-style="italic">?</text>
+        </g>
+      </g>
+      <g class="k1"><text x="96"  y="82"  font-size="11" text-anchor="middle" fill="#d4789a" opacity=".6">✦</text></g>
+      <g class="k2"><text x="230" y="95"  font-size="9"  text-anchor="middle" fill="#6a9fd4" opacity=".65">✦</text></g>
+      <g class="k3"><text x="112" y="138" font-size="8"  text-anchor="middle" fill="#9b8bc0" opacity=".5">✦</text></g>
+    </svg>
+
+    <div class="sbadge">una dulce sorpresa nos espera</div>
+    <h1 class="stitle">¿<em class="ep">Niña</em> o <em class="eb">Niño</em>?</h1>
+    <p class="ssub">Ya amamos a este bebé con locura. Ven a descubrir el secreto con nosotros.</p>
+
+    <div class="team-row">
+      <div class="tc tc-p">
+        <span class="tc-ico">🎀</span>
+        <span class="tc-lbl tc-lp">equipo niña</span>
+        <div class="tc-name tc-np">Rosa</div>
+      </div>
+      <div class="tc tc-b">
+        <span class="tc-ico">🎐</span>
+        <span class="tc-lbl tc-lb">equipo niño</span>
+        <div class="tc-name tc-nb">Azul</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: UBICACIÓN -->
+  <div class="slide s2" id="slide-1">
+    <svg class="svg-sc" viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
+      <g class="l1">
+        <ellipse cx="52" cy="70" rx="24" ry="37" fill="#7bbf8a" opacity=".7"/>
+        <rect x="48" y="94" width="8" height="24" fill="#a07850" rx="3"/>
+        <ellipse cx="52" cy="52" rx="17" ry="26" fill="#5da574" opacity=".8"/>
+      </g>
+      <g class="l2">
+        <ellipse cx="268" cy="74" rx="22" ry="34" fill="#7bbf8a" opacity=".65"/>
+        <rect x="264" y="96" width="8" height="22" fill="#a07850" rx="3"/>
+        <ellipse cx="268" cy="57" rx="16" ry="24" fill="#5da574" opacity=".75"/>
+      </g>
+      <path d="M0 118 Q160 103 320 118 L320 140 L0 140 Z" fill="#c8e8c0" opacity=".42"/>
+      <path d="M80 108 Q160 58 240 108" fill="#a8d4a0" opacity=".26"/>
+      <!-- Waterfall -->
+      <path d="M155 62 Q158 82 155 102 Q152 122 155 132" fill="none" stroke="#7ab8e0" stroke-width="3" stroke-linecap="round" opacity=".62"/>
+      <path d="M162 68 Q164 86 162 106 Q160 124 162 134" fill="none" stroke="#7ab8e0" stroke-width="2" stroke-linecap="round" opacity=".42"/>
+      <rect x="118" y="38" width="84" height="28" rx="7" fill="white" opacity=".88"/>
+      <text x="160" y="57" font-family="Playfair Display,serif" font-size="12" fill="#3a6830" text-anchor="middle" font-weight="bold">Parque ARVI</text>
+    </svg>
+
+    <div class="sbadge">nos encontramos aquí</div>
+    <h2 class="stitle" style="font-size:2rem;">Chorro <em class="eb">Clarín</em></h2>
+    <p class="ssub">Naturaleza, frescura y magia. Parque ARVI, Santa Elena, Medellín.</p>
+
+    <div class="gc">
+      <span class="glbl">📍 punto de encuentro</span>
+      <div class="gval" style="font-size:1rem;font-style:italic;">Chorro Clarín, Parque ARVI</div>
+      <div class="gsub">Metrocable Santa Elena → entrada principal</div>
+    </div>
+
+    <a href="https://parquearvi.org/publicaciones/79/chorro-clarin/" target="_blank" class="btn-loc">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+      </svg>
+      Ver ubicación
+    </a>
+  </div>
+
+  <!-- SLIDE 3: FECHA Y HORA -->
+  <div class="slide s3" id="slide-2">
+    <svg class="svg-sc" viewBox="0 0 320 135" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:0">
+      <g class="sun">
+        <circle cx="160" cy="67" r="31" fill="#f9d78e" opacity=".88"/>
+        <circle cx="160" cy="67" r="23" fill="#f5c842"/>
+        <g stroke="#f5c842" stroke-width="2.5" stroke-linecap="round" opacity=".7">
+          <line x1="160" y1="27" x2="160" y2="19"/><line x1="191" y1="38" x2="197" y2="32"/>
+          <line x1="203" y1="67" x2="211" y2="67"/><line x1="191" y1="96" x2="197" y2="102"/>
+          <line x1="160" y1="108" x2="160" y2="116"/><line x1="129" y1="96" x2="123" y2="102"/>
+          <line x1="117" y1="67" x2="109" y2="67"/><line x1="129" y1="38" x2="123" y2="32"/>
+        </g>
+      </g>
+      <!-- Pink cloud left -->
+      <g class="c1" style="animation-duration:5s">
+        <ellipse cx="66" cy="58" rx="31" ry="13" fill="#f5d0e0" opacity=".8"/>
+        <ellipse cx="50" cy="63" rx="17" ry="11" fill="#f5d0e0" opacity=".77"/>
+        <ellipse cx="86" cy="63" rx="15" ry="10" fill="#f5d0e0" opacity=".77"/>
+      </g>
+      <!-- Blue cloud right -->
+      <g class="c2" style="animation-duration:6s">
+        <ellipse cx="254" cy="53" rx="34" ry="14" fill="#d0e5f5" opacity=".8"/>
+        <ellipse cx="236" cy="59" rx="19" ry="11" fill="#d0e5f5" opacity=".77"/>
+        <ellipse cx="276" cy="59" rx="17" ry="10" fill="#d0e5f5" opacity=".77"/>
+      </g>
+      <g class="k1"><text x="86"  y="100" font-size="17" text-anchor="middle" fill="#d4789a" opacity=".5">♡</text></g>
+      <g class="k2"><text x="234" y="105" font-size="13" text-anchor="middle" fill="#6a9fd4" opacity=".55">♡</text></g>
+      <g class="k3"><text x="54"  y="32"  font-size="9"  text-anchor="middle" fill="#d4789a" opacity=".4">✦</text></g>
+      <g class="k1"><text x="270" y="30"  font-size="9"  text-anchor="middle" fill="#6a9fd4" opacity=".4">✦</text></g>
+    </svg>
+
+    <div class="date-pill">Domingo 26 de abril</div>
+    <div class="time-wrap">
+      <span class="time-big">10:30</span><span class="time-am"> am</span>
+    </div>
+
+    <div style="display:flex;gap:10px;justify-content:center;max-width:315px;width:100%">
+      <div class="gc tc-p" style="flex:1;max-width:none;padding:.78rem .85rem">
+        <span style="font-size:1.3rem">🌸</span>
+        <div class="glbl">clima</div>
+        <div class="gval" style="font-size:.93rem">Mañana fresca</div>
+      </div>
+      <div class="gc tc-b" style="flex:1;max-width:none;padding:.78rem .85rem">
+        <span style="font-size:1.3rem">🌿</span>
+        <div class="glbl">ambiente</div>
+        <div class="gval" style="font-size:.93rem">Al aire libre</div>
+      </div>
+    </div>
+    <p class="ssub" style="margin-top:.65rem;font-size:.82rem">¡Llega puntual para no perderte el gran momento!</p>
+  </div>
+
+  <!-- SLIDE 4: PICNIC -->
+  <div class="slide s4" id="slide-3">
+    <svg class="svg-sc" viewBox="0 0 320 148" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:.35rem">
+      <!-- Checkered blanket: alternating pink & blue -->
+      <g class="blnk">
+        <path d="M75 118 Q160 103 245 118 L252 140 L68 140 Z" fill="#d0a880" opacity=".32"/>
+        <rect x="85"  y="120" width="18" height="11" rx="2" fill="#f5d0e0" opacity=".62"/>
+        <rect x="121" y="120" width="18" height="11" rx="2" fill="#f5d0e0" opacity=".62"/>
+        <rect x="157" y="120" width="18" height="11" rx="2" fill="#f5d0e0" opacity=".62"/>
+        <rect x="193" y="120" width="18" height="11" rx="2" fill="#f5d0e0" opacity=".62"/>
+        <rect x="103" y="120" width="18" height="11" rx="2" fill="#d0e5f5" opacity=".62"/>
+        <rect x="139" y="120" width="18" height="11" rx="2" fill="#d0e5f5" opacity=".62"/>
+        <rect x="175" y="120" width="18" height="11" rx="2" fill="#d0e5f5" opacity=".62"/>
+        <rect x="211" y="120" width="18" height="11" rx="2" fill="#d0e5f5" opacity=".62"/>
+        <rect x="85"  y="130" width="18" height="9" rx="1" fill="#d0e5f5" opacity=".4"/>
+        <rect x="103" y="130" width="18" height="9" rx="1" fill="#f5d0e0" opacity=".4"/>
+        <rect x="121" y="130" width="18" height="9" rx="1" fill="#d0e5f5" opacity=".4"/>
+        <rect x="139" y="130" width="18" height="9" rx="1" fill="#f5d0e0" opacity=".4"/>
+        <rect x="157" y="130" width="18" height="9" rx="1" fill="#d0e5f5" opacity=".4"/>
+        <rect x="175" y="130" width="18" height="9" rx="1" fill="#f5d0e0" opacity=".4"/>
+        <rect x="193" y="130" width="18" height="9" rx="1" fill="#d0e5f5" opacity=".4"/>
+        <rect x="211" y="130" width="18" height="9" rx="1" fill="#f5d0e0" opacity=".4"/>
+      </g>
+      <!-- Basket -->
+      <g class="bsk">
+        <ellipse cx="160" cy="108" rx="40" ry="12" fill="#b89a6a" opacity=".78"/>
+        <path d="M120 108 Q120 78 160 73 Q200 78 200 108 Z" fill="#d4b88a" opacity=".82"/>
+        <path d="M120 108 L200 108" stroke="#b89a6a" stroke-width="1.5"/>
+        <path d="M140 73 Q160 53 180 73" fill="none" stroke="#b89a6a" stroke-width="3" stroke-linecap="round"/>
+        <path d="M130 93 Q160 86 190 93" fill="none" stroke="#b89a6a" stroke-width="1" opacity=".45"/>
+      </g>
+      <!-- Pink bottle left, blue bottle right -->
+      <g class="btl">
+        <rect x="140" y="52" width="11" height="28" rx="4" fill="#e8a0b8" opacity=".85"/>
+        <rect x="141" y="49" width="9"  height="7"  rx="2" fill="#d4789a" opacity=".85"/>
+        <rect x="161" y="52" width="11" height="28" rx="4" fill="#98c4e8" opacity=".85"/>
+        <rect x="162" y="49" width="9"  height="7"  rx="2" fill="#6a9fd4" opacity=".85"/>
+      </g>
+      <!-- Fruits -->
+      <circle cx="178" cy="76" r="8" fill="#e8584a" opacity=".7"/>
+      <circle cx="140" cy="78" r="6" fill="#f5c842" opacity=".7"/>
+      <!-- Pink flower -->
+      <g class="k1">
+        <circle cx="94" cy="93" r="5" fill="#d4789a" opacity=".56"/>
+        <circle cx="88" cy="89" r="4" fill="#f0b0c8" opacity=".5"/>
+        <circle cx="100" cy="89" r="4" fill="#f0b0c8" opacity=".5"/>
+        <circle cx="94" cy="83" r="4" fill="#f0b0c8" opacity=".5"/>
+      </g>
+      <!-- Blue flower -->
+      <g class="k2">
+        <circle cx="226" cy="90" r="5" fill="#6a9fd4" opacity=".54"/>
+        <circle cx="220" cy="86" r="4" fill="#a8c8e8" opacity=".5"/>
+        <circle cx="232" cy="86" r="4" fill="#a8c8e8" opacity=".5"/>
+        <circle cx="226" cy="80" r="4" fill="#a8c8e8" opacity=".5"/>
+      </g>
+      <!-- Butterfly: left wing pink, right wing blue -->
+      <g class="k3">
+        <path d="M260 48 Q270 38 275 48 Q270 56 260 48" fill="#f0b0c8" opacity=".65"/>
+        <path d="M260 48 Q250 38 245 48 Q250 56 260 48" fill="#a8c8e8" opacity=".65"/>
+        <circle cx="260" cy="48" r="2" fill="#9060a0"/>
+      </g>
+    </svg>
+
+    <div class="sbadge">¡es hora de compartir!</div>
+    <h2 class="stitle" style="font-size:1.85rem">Picnic en <em class="ep">familia</em></h2>
+
+    <div class="gc">
+      <span class="glbl">somos</span>
+      <div class="pnum">15</div>
+      <span class="glbl" style="margin-top:.14rem">personas</span>
+      <p class="pmsg">Por favor, cada grupo traiga algo rico para compartir. ¡Juntos haremos el picnic perfecto! 🧺</p>
+    </div>
+  </div>
+
+</div><!-- /carousel -->
+
+<!-- Dots -->
+<div class="dots" id="dots">
+  <div class="dot active" onclick="goToSlide(0)"></div>
+  <div class="dot" onclick="goToSlide(1)"></div>
+  <div class="dot" onclick="goToSlide(2)"></div>
+  <div class="dot" onclick="goToSlide(3)"></div>
+</div>
+
+<!-- Swipe hint -->
+<div id="hint">desliza ›</div>
+
+<!-- WhatsApp -->
+<a class="wa" href="https://chat.whatsapp.com/EL6Fr0ETD6IEgbblW2pTn5?mode=gi_t" target="_blank">
+  <svg width="21" height="21" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
+  Confirmar Asistencia
+</a>
+
+<script>
+/* ── State ── */
+let cur=0,total=4,timer,isPlaying=false,audioCtx=null,masterGain=null,loopTO=null;
+
+/* ── Navigation ── */
+function updateUI(){
+  document.getElementById('ctr').textContent=(cur+1)+' / '+total;
+  document.getElementById('prog-fill').style.width=((cur+1)/total*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
+}
+function goToSlide(n){
+  document.getElementById('slide-'+cur).classList.remove('active');
+  cur=(n+total)%total;
+  document.getElementById('slide-'+cur).classList.add('active');
+  updateUI();
+}
+function nextSlide(){goToSlide(cur+1)}
+function startAutoplay(){timer=setInterval(nextSlide,6000)}
+
+/* ── Touch swipe ── */
+let tx=0,ty=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+document.addEventListener('touchend',e=>{
+  let dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>38){
+    clearInterval(timer);goToSlide(dx<0?cur+1:cur-1);startAutoplay();
+  }
+},{passive:true});
+
+/* ── Music ── */
+function playNote(f,t,d){
+  const o=audioCtx.createOscillator(),e=audioCtx.createGain();
+  o.connect(e);e.connect(masterGain);o.type='sine';o.frequency.value=f;
+  e.gain.setValueAtTime(0,t);e.gain.linearRampToValueAtTime(.27,t+.06);
+  e.gain.linearRampToValueAtTime(.11,t+d*.65);e.gain.linearRampToValueAtTime(0,t+d);
+  o.start(t);o.stop(t+d);
+}
+function playMelody(){
+  const n=[[261.63,.5],[293.66,.5],[329.63,.5],[349.23,.5],[392,.5],[349.23,.5],[329.63,.5],[293.66,.5],
+    [261.63,.5],[329.63,.5],[392,.5],[440,.5],[392,1],[349.23,.5],[329.63,.5],
+    [293.66,.5],[261.63,.5],[293.66,.5],[329.63,.5],[349.23,.5],[392,.5],[349.23,.5],[329.63,.5],[261.63,1.5]];
+  let t=audioCtx.currentTime+.1;
+  const dur=n.reduce((s,[,d])=>s+d*.5,0);
+  n.forEach(([f,d])=>{playNote(f,t,d*.9);t+=d*.5});
+  loopTO=setTimeout(()=>{if(isPlaying)playMelody()},dur*1000);
+}
+function startMusic(){
+  if(!audioCtx){
+    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    masterGain=audioCtx.createGain();masterGain.gain.value=.4;masterGain.connect(audioCtx.destination);
+  }
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  isPlaying=true;playMelody();
+  const b=document.getElementById('mbtn');b.textContent='🔊';b.classList.add('playing');
+}
+function toggleMusic(){
+  const b=document.getElementById('mbtn');
+  if(!isPlaying){startMusic()}
+  else{audioCtx.suspend();isPlaying=false;clearTimeout(loopTO);b.textContent='🎵';b.classList.remove('playing')}
+}
+
+/* ── Open invitation ── */
+function openInvitation(){
+  startMusic();
+  const i=document.getElementById('intro');
+  i.classList.add('out');
+  setTimeout(()=>{
+    i.style.display='none';
+    document.getElementById('ctr').style.display='block';
+    document.getElementById('mbtn').style.display='flex';
+    const d=document.getElementById('dots');d.style.opacity='1';d.style.pointerEvents='all';
+    startAutoplay();updateUI();
+  },850);
+}
+
+/* ── Intro petals: 50% pink, 50% blue ── */
+function spawnIntroPetals(){
+  const c=document.getElementById('ipetals');
+  const pinks=['#f5d0e0','#f0b8cc','#fce0ec'];
+  const blues=['#d0e5f5','#b8d4f0','#daeeff'];
+  for(let i=0;i<24;i++){
+    const p=document.createElement('div');p.className='ipetal';
+    const s=Math.random()*13+7;
+    const isPink=i<12;
+    const col=isPink?pinks[Math.floor(Math.random()*pinks.length)]:blues[Math.floor(Math.random()*blues.length)];
+    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}vw;top:-25px;`+
+      `background:${col};animation-duration:${Math.random()*10+8}s;`+
+      `animation-delay:${Math.random()*10}s;opacity:0;`+
+      `border-radius:${Math.random()>.5?'50% 0 50% 0':'50%'};`;
+    c.appendChild(p);
+  }
+}
+
+/* ── Global confetti: balanced ── */
+function spawnConfetti(){
+  const cols=['#d4789a','#d4789a','#e8a8c0','#6a9fd4','#6a9fd4','#98c4e8','#7bbf8a','#f5c842','#9b8bc0'];
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div');p.className='cf';
+    const s=Math.random()*6+4;
+    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}vw;top:-25px;`+
+      `background:${cols[Math.floor(Math.random()*cols.length)]};`+
+      `border-radius:${Math.random()>.5?'50%':'2px'};`+
+      `animation-duration:${Math.random()*9+7}s;animation-delay:${Math.random()*14}s;opacity:0;`;
+    document.body.appendChild(p);
+  }
+}
+
+/* ── Init ── */
+spawnIntroPetals();spawnConfetti();
+const dots=document.getElementById('dots');
+dots.style.opacity='0';dots.style.pointerEvents='none';
+</script>
+</body>
+</html>
